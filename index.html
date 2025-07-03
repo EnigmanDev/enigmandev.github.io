@@ -1,70 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enigman – Monochrome Portfolio</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <style>
+    :root {
+      /* High Contrast Monochrome Palette with Glowing Effect */
+      --bg: #000000; /* Pure black background for maximum contrast */
+      --fg: #ffffff; /* Pure white foreground text for maximum contrast */
+      --accent: #e0e0e0; /* Bright light gray for accents, simulating a glow */
+      --dim: rgba(255, 255, 255, 0.5); /* Brighter dim for more noticeable glow effects */
+      --border: #222222; /* Dark gray for borders, still visible against black */
+      --card-bg: #111111; /* Very dark gray for card backgrounds, close to black but distinct */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: 'Quicksand', sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; overflow-x: hidden; }
+
+    a { color: var(--accent); text-decoration: none; transition: text-shadow 0.3s ease; }
+    a:hover { text-shadow: 0 0 10px var(--accent); } /* Increased shadow for a stronger glow on hover */
+
+    h1, h2, h3, h4 { font-family: 'JetBrains Mono', monospace; color: var(--fg); text-shadow: 0 0 8px var(--dim); } /* Stronger shadow for a glowing heading effect */
+
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(0,0,0,0.95); /* Closer to black for header background */
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border); padding: 1rem 2rem;
+    }
+
+    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    nav .logo { font-size: 1.5rem; font-weight: bold; font-family: 'JetBrains Mono'; color: var(--fg); }
+
+    nav ul { display: flex; list-style: none; gap: 2rem; }
+
+    main { padding: 2rem 1.5rem; }
+    section { max-width: 1100px; margin: 0 auto; padding: 4rem 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+
+    #hero { text-align: center; padding: 6rem 0; }
+    #hero h1 { font-size: clamp(2.6rem, 6vw, 3.5rem); margin-bottom: 1rem; }
+    .intro { max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+
+    .tech-stack { margin-top: 2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+    .tech-stack span {
+      background: rgba(255, 255, 255, 0.08); /* Slightly brighter background for tech stack items */
+      border: 1px solid rgba(255, 255, 255, 0.2); /* Brighter border for tech stack items */
+      color: var(--fg);
+      font-family: 'JetBrains Mono';
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .timeline { margin-top: 2rem; border-left: 2px solid var(--border); padding-left: 1.5rem; }
+    .timeline-item { margin-bottom: 1.5rem; }
+    .timeline-item h4 { font-size: 1rem; margin-bottom: 0.25rem; }
+    .timeline-item span { font-size: 0.85rem; opacity: 0.7; } /* Slightly more opaque for better readability */
+
+    .project-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;
+    }
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15); /* White shadow for glow effect on hover */
+    }
+    .card a { display: inline-block; margin-top: 1rem; font-weight: bold; }
+
+    #contact { text-align: center; }
+    footer { text-align: center; padding: 2rem; font-size: 0.9rem; color: #aaaaaa; } /* Slightly brighter footer text */
+
+    #bg-webgl { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+    body.no-webgl { background: linear-gradient(135deg, #000000 0%, #111111 100%); } /* Fallback for no WebGL, adjusted to new palette */
+
+    @media (max-width: 768px) {
+      nav { flex-direction: column; }
+      nav ul { margin-top: 1rem; gap: 1rem; }
+      #hero h1 { font-size: 2.5rem; }
+    }
+
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">My Portfolio</div>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <canvas id="bg-webgl"></canvas>
+  <header>
+    <nav>
+      <div class="logo">Enigman</div>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <main>
-        <section id="hero">
-            <div class="hero-text">
-                <h1>Hi, I'm [Your Name]</h1>
-                <p>A passionate developer creating modern and responsive web applications.</p>
-            </div>
-        </section>
+  <main>
+    <section id="hero" class="fade-in">
+      <h1>Hey, I'm Enigman</h1>
+      <p class="intro">A 16-year-old developer & Blender tinkerer (since 2022). I craft real-time graphics in Roblox, noodle in C++, Python & Lua, and love turning ideas into interactive pixels.</p>
+      <div class="tech-stack">
+        <span>C++</span><span>Python</span><span>Lua</span><span>Blender</span><span>WebGL</span><span>Roblox Studio</span>
+      </div>
+    </section>
 
-        <section id="about">
-            <h2>About Me</h2>
-            <p>I am a software developer with a passion for building beautiful and functional websites. I have experience with a variety of technologies, including HTML, CSS, JavaScript, and more. I am always looking for new challenges and opportunities to learn and grow.</p>
-        </section>
+    <section id="about" class="fade-in">
+      <h2>About Me</h2>
+      <p>From Instagram Reels to low-level rendering, I started with Roblox and spiraled into Blender, C++, and GLSL. I'm into neural-visuals, procedural shaders, and custom lighting systems that make pixels feel alive.</p>
+      <div class="timeline">
+        <div class="timeline-item"><h4>2022 · Blender Awakening</h4><span>First stylized scene, hooked on shaders.</span></div>
+        <div class="timeline-item"><h4>2023 · Roblox Lighting Engine</h4><span>Reverse-engineered materials, wrote custom PBR in Lua.</span></div>
+        <div class="timeline-item"><h4>2024 · WebGL Experiments</h4><span>Dove into GLSL, noise, and real-time visuals.</span></div>
+        <div class="timeline-item"><h4>2025 · Portfolio v2</h4><span>Monochrome, handcrafted. Minimal, dark-mode forever.</span></div>
+      </div>
+    </section>
 
-        <section id="projects">
-            <h2>Projects</h2>
-            <div class="project-cards">
-                <div class="card">
-                    <h3>Project 1</h3>
-                    <p>A brief description of the project. What it does, what technologies were used, etc.</p>
-                    <a href="#">View Project</a>
-                </div>
-                <div class="card">
-                    <h3>Project 2</h3>
-                    <p>A brief description of the project. What it does, what technologies were used, etc.</p>
-                    <a href="#">View Project</a>
-                </div>
-                <div class="card">
-                    <h3>Project 3</h3>
-                    <p>A brief description of the project. What it does, what technologies were used, etc.</p>
-                    <a href="#">View Project</a>
-                </div>
-            </div>
-        </section>
+    <section id="projects" class="fade-in">
+      <h2>Projects</h2>
+      <div class="project-cards">
+        <div class="card">
+          <h3>Roblox Lighting Engine</h3>
+          <p>Custom real-time lighting & PBR in Lua. Includes shadows, reflections, GI—no plugins.</p>
+          <a href="#">View on GitHub →</a>
+        </div>
+        <div class="card">
+          <h3>WebGL Grid Noise</h3>
+          <p>Subtle, animated grid/noise shader lib in GLSL, optimized for 60 FPS backdrops.</p>
+          <a href="#">View Repo →</a>
+        </div>
+        <div class="card">
+          <h3>PyGame Color Block Jam</h3>
+          <p>Tetris-inspired with color-matching, written in Python & PyGame.</p>
+          <a href="#">Play Demo →</a>
+        </div>
+      </div>
+    </section>
 
-        <section id="contact">
-            <h2>Contact Me</h2>
-            <p>Feel free to reach out to me via email at <a href="mailto:youremail@example.com">youremail@example.com</a></p>
-        </section>
-    </main>
+    <section id="contact" class="fade-in">
+      <h2>Get in Touch</h2>
+      <p>DM me on Instagram <a href="https://instagram.com/yourhandle" target="_blank">@yourhandle</a> or email <a href="mailto:enigman.dev@example.com">enigman.dev@example.com</a></p>
+    </section>
+  </main>
 
-    <footer>
-        <p>&copy; 2025 [Your Name]. All rights reserved.</p>
-    </footer>
+  <footer>© 2025 Enigman. Crafted in code with monochrome & WebGL dust.</footer>
 
-    <script src="script.js"></script>
+  <script>
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Fade-In Scroll Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // WebGL Background
+    (function(){
+      const canvas = document.getElementById('bg-webgl');
+      const gl = canvas.getContext('webgl');
+      if (!gl) return document.body.classList.add('no-webgl');
+
+      const resize = () => {
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = innerWidth * dpr;
+        canvas.height = innerHeight * dpr;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      };
+      window.addEventListener('resize', resize);
+      resize();
+
+      // Vertex shader source - remains the same as it just sets up positions
+      const vertSrc = `
+        attribute vec2 a_position;
+        void main() {
+          gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+      `;
+      // Fragment shader source - ensures output is grayscale
+      const fragSrc = `
+        precision mediump float;
+        uniform float u_time;
+        uniform vec2 u_res;
+
+        // Rotation matrix function
+        mat2 rot(float a) {
+          float s = sin(a), c = cos(a);
+          return mat2(c, -s, s, c);
+        }
+
+        void main() {
+          // Normalize UV coordinates to -1 to 1 range
+          vec2 uv = (gl_FragCoord.xy / u_res) * 2.0 - 1.0;
+          // Apply rotation based on time
+          uv *= rot(u_time * 0.04);
+
+          // Generate grid pattern
+          float grid = abs(sin(uv.x * 36.0)) + abs(sin(uv.y * 36.0));
+          grid = smoothstep(1.75, 1.95, grid); // Sharpen the grid lines
+
+          // Generate noise
+          float noise = fract(sin(dot(uv * 1.3 + u_time, vec2(12.9898, 78.233))) * 43758.5453);
+
+          // Mix grid and noise for the final monochrome background effect
+          float b = mix(grid, noise, 0.12); // Blend grid and noise, 0.12 for subtle noise
+          
+          // Output grayscale color (all RGB components are 'b')
+          gl_FragColor = vec4(vec3(b), 1.0);
+        }
+      `;
+
+      const compile = (type, src) => {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          console.error(gl.getShaderInfoLog(s));
+          return null;
+        }
+        return s;
+      };
+
+      const vert = compile(gl.VERTEX_SHADER, vertSrc);
+      const frag = compile(gl.FRAGMENT_SHADER, fragSrc);
+      const prog = gl.createProgram();
+      gl.attachShader(prog, vert);
+      gl.attachShader(prog, frag);
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(prog));
+        return;
+      }
+      gl.useProgram(prog);
+
+      const posLoc = gl.getAttribLocation(prog, 'a_position');
+      const timeLoc = gl.getUniformLocation(prog, 'u_time');
+      const resLoc = gl.getUniformLocation(prog, 'u_res');
+
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(posLoc);
+      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+      let start = null;
+      const render = (ts) => {
+        if (!start) start = ts;
+        const t = (ts - start) / 1000;
+        gl.uniform1f(timeLoc, t);
+        gl.uniform2f(resLoc, canvas.width, canvas.height);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        requestAnimationFrame(render);
+      };
+      requestAnimationFrame(render);
+    })();
+  </script>
 </body>
 </html>
