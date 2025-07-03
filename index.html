@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>John Doe - Portfolio</title>
+    <title>Developer Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav>
+            <div class="logo">My Portfolio</div>
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -18,37 +22,47 @@
     </header>
 
     <main>
-        <section id="about">
-            <div class="container">
-                <h2>About Me</h2>
-                <p>Welcome to my portfolio! I am a passionate web developer with experience in creating modern and responsive websites.</p>
+        <section id="hero">
+            <div class="hero-text">
+                <h1>Hi, I'm [Your Name]</h1>
+                <p>A passionate developer creating modern and responsive web applications.</p>
             </div>
         </section>
 
+        <section id="about">
+            <h2>About Me</h2>
+            <p>I am a software developer with a passion for building beautiful and functional websites. I have experience with a variety of technologies, including HTML, CSS, JavaScript, and more. I am always looking for new challenges and opportunities to learn and grow.</p>
+        </section>
+
         <section id="projects">
-            <div class="container">
-                <h2>Projects</h2>
-                <div class="project-card">
+            <h2>Projects</h2>
+            <div class="project-cards">
+                <div class="card">
                     <h3>Project 1</h3>
-                    <p>A brief description of your project.</p>
+                    <p>A brief description of the project. What it does, what technologies were used, etc.</p>
+                    <a href="#">View Project</a>
                 </div>
-                <div class="project-card">
+                <div class="card">
                     <h3>Project 2</h3>
-                    <p>A brief description of your project.</p>
+                    <p>A brief description of the project. What it does, what technologies were used, etc.</p>
+                    <a href="#">View Project</a>
+                </div>
+                <div class="card">
+                    <h3>Project 3</h3>
+                    <p>A brief description of the project. What it does, what technologies were used, etc.</p>
+                    <a href="#">View Project</a>
                 </div>
             </div>
         </section>
 
         <section id="contact">
-            <div class="container">
-                <h2>Contact Me</h2>
-                <p>You can reach me at <a href="mailto:your.email@example.com">your.email@example.com</a></p>
-            </div>
+            <h2>Contact Me</h2>
+            <p>Feel free to reach out to me via email at <a href="mailto:youremail@example.com">youremail@example.com</a></p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 John Doe</p>
+        <p>&copy; 2025 [Your Name]. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
