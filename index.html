@@ -1,264 +1,825 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Enigman – Monochrome Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<title>Enigman – 3D Artist</title>
 
-  <style>
-    :root {
-      /* High Contrast Monochrome Palette with Glowing Effect */
-      --bg: #000000; /* Pure black background for maximum contrast */
-      --fg: #ffffff; /* Pure white foreground text for maximum contrast */
-      --accent: #e0e0e0; /* Bright light gray for accents, simulating a glow */
-      --dim: rgba(255, 255, 255, 0.5); /* Brighter dim for more noticeable glow effects */
-      --border: #222222; /* Dark gray for borders, still visible against black */
-      --card-bg: #111111; /* Very dark gray for card backgrounds, close to black but distinct */
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; font-family: 'Quicksand', sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; overflow-x: hidden; }
+<style>
 
-    a { color: var(--accent); text-decoration: none; transition: text-shadow 0.3s ease; }
-    a:hover { text-shadow: 0 0 10px var(--accent); } /* Increased shadow for a stronger glow on hover */
+:root{
 
-    h1, h2, h3, h4 { font-family: 'JetBrains Mono', monospace; color: var(--fg); text-shadow: 0 0 8px var(--dim); } /* Stronger shadow for a glowing heading effect */
+/* ATOM ONE DARK */
 
-    header {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(0,0,0,0.95); /* Closer to black for header background */
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border); padding: 1rem 2rem;
-    }
+--bg:#282C34;
+--surface:#21252B;
+--border:#3E4451;
 
-    nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-    nav .logo { font-size: 1.5rem; font-weight: bold; font-family: 'JetBrains Mono'; color: var(--fg); }
+--text:#ABB2BF;
+--text-secondary:#5C6370;
 
-    nav ul { display: flex; list-style: none; gap: 2rem; }
+--accent:#61AFEF;
+--accent-hover:#528BFF;
 
-    main { padding: 2rem 1.5rem; }
-    section { max-width: 1100px; margin: 0 auto; padding: 4rem 0; border-bottom: 1px solid var(--border); }
-    section:last-of-type { border-bottom: none; }
+--card-hover:#2C313C;
 
-    #hero { text-align: center; padding: 6rem 0; }
-    #hero h1 { font-size: clamp(2.6rem, 6vw, 3.5rem); margin-bottom: 1rem; }
-    .intro { max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+}
 
-    .tech-stack { margin-top: 2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
-    .tech-stack span {
-      background: rgba(255, 255, 255, 0.08); /* Slightly brighter background for tech stack items */
-      border: 1px solid rgba(255, 255, 255, 0.2); /* Brighter border for tech stack items */
-      color: var(--fg);
-      font-family: 'JetBrains Mono';
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-    .timeline { margin-top: 2rem; border-left: 2px solid var(--border); padding-left: 1.5rem; }
-    .timeline-item { margin-bottom: 1.5rem; }
-    .timeline-item h4 { font-size: 1rem; margin-bottom: 0.25rem; }
-    .timeline-item span { font-size: 0.85rem; opacity: 0.7; } /* Slightly more opaque for better readability */
+html{
+scrollbar-width:none;
+-ms-overflow-style:none;
+overflow-y:scroll;
+}
 
-    .project-cards {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;
-    }
-    .card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 6px; padding: 1.5rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15); /* White shadow for glow effect on hover */
-    }
-    .card a { display: inline-block; margin-top: 1rem; font-weight: bold; }
+html::-webkit-scrollbar{
+display:none;
+}
 
-    #contact { text-align: center; }
-    footer { text-align: center; padding: 2rem; font-size: 0.9rem; color: #aaaaaa; } /* Slightly brighter footer text */
+body{
+font-family:Inter,system-ui;
+background:var(--bg);
+color:var(--text);
+line-height:1.6;
+scrollbar-width:none;
+-ms-overflow-style:none;
+overflow-y:scroll;
+}
 
-    #bg-webgl { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-    body.no-webgl { background: linear-gradient(135deg, #000000 0%, #111111 100%); } /* Fallback for no WebGL, adjusted to new palette */
+body::-webkit-scrollbar{
+display:none;
+}
 
-    @media (max-width: 768px) {
-      nav { flex-direction: column; }
-      nav ul { margin-top: 1rem; gap: 1rem; }
-      #hero h1 { font-size: 2.5rem; }
-    }
+a{
+color:inherit;
+text-decoration:none;
+}
 
-    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-  </style>
+/* NAV */
+
+header{
+position:sticky;
+top:0;
+backdrop-filter:blur(20px);
+background:rgba(40,44,52,.9);
+border-bottom:1px solid var(--border);
+z-index:100;
+}
+
+nav{
+max-width:1200px;
+margin:auto;
+padding:1.5rem 2rem;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-weight:800;
+letter-spacing:.15em;
+color:#E5E9F0;
+}
+
+nav ul{
+display:flex;
+gap:2.5rem;
+list-style:none;
+}
+
+nav a{
+color:var(--text-secondary);
+font-weight:500;
+transition:.2s;
+}
+
+nav a:hover{
+color:#E5E9F0;
+}
+
+/* HERO */
+
+#hero{
+max-width:1200px;
+margin:auto;
+padding:8rem 2rem;
+}
+
+.hero-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:3rem;
+align-items:center;
+}
+
+.hero-text h1{
+font-size:4rem;
+line-height:1.1;
+margin-bottom:1.5rem;
+color:#E5E9F0;
+}
+
+.hero-intro{
+font-size:1.1rem;
+color:var(--text-secondary);
+margin-bottom:2rem;
+max-width:500px;
+}
+
+.hero-tags{
+display:flex;
+gap:1rem;
+flex-wrap:wrap;
+margin-bottom:2rem;
+}
+
+.hero-tags span{
+border:1px solid var(--border);
+padding:.4rem .9rem;
+border-radius:4px;
+font-size:.85rem;
+color:#ABB2BF;
+background:#2C313C;
+}
+
+.cta-button{
+display:inline-block;
+padding:.9rem 2rem;
+background:var(--accent);
+border-radius:4px;
+font-weight:600;
+color:#111;
+transition:.2s;
+}
+
+.cta-button:hover{
+background:var(--accent-hover);
+}
+
+.hero-art img{
+width:100%;
+border-radius:10px;
+border:1px solid var(--border);
+}
+
+/* SECTIONS */
+
+section{
+max-width:1200px;
+margin:auto;
+padding:5rem 2rem;
+}
+
+section h2{
+font-size:2.4rem;
+margin-bottom:3rem;
+color:#E5E9F0;
+}
+
+/* PROJECT GRID */
+
+.project-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:2rem;
+}
+
+.project{
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:10px;
+overflow:hidden;
+transition:.25s;
+cursor:pointer;
+}
+
+.project:hover{
+transform:translateY(-5px);
+border-color:#61AFEF;
+background:var(--card-hover);
+}
+
+.project img{
+width:100%;
+height:300px;
+object-fit:cover;
+}
+
+.project-info{
+padding:1.2rem;
+}
+
+.project-info h3{
+margin-bottom:.5rem;
+font-size:1.1rem;
+color:#E5E9F0;
+}
+
+.project-info p{
+color:var(--text-secondary);
+font-size:.9rem;
+}
+
+/* ABOUT */
+
+.about{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:3rem;
+}
+
+.about p{
+color:var(--text-secondary);
+font-size:1.05rem;
+}
+
+/* CONTACT */
+
+#contact{
+text-align:center;
+}
+
+#contact p{
+font-size:1.1rem;
+color:var(--text-secondary);
+margin-bottom:1rem;
+}
+
+.contact-links{
+display:flex;
+justify-content:center;
+gap:2rem;
+margin-top:1rem;
+}
+
+.contact-links a{
+font-weight:600;
+border-bottom:2px solid transparent;
+transition:.2s;
+}
+
+.contact-links a:hover{
+border-color:var(--accent);
+color:#E5E9F0;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:3rem 2rem;
+color:#5C6370;
+border-top:1px solid var(--border);
+margin-top:3rem;
+font-size:.9rem;
+}
+
+/* LIGHTBOX */
+
+.lightbox{
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,.97);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999;
+opacity:0;
+transition:opacity .3s ease;
+backdrop-filter:blur(4px);
+}
+
+.lightbox.active{
+display:flex;
+opacity:1;
+cursor:pointer;
+}
+
+.lightbox-wrapper{
+position:relative;
+max-width:90vw;
+max-height:90vh;
+overflow:hidden;
+border-radius:8px;
+border:1px solid var(--border);
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.lightbox img{
+width:100%;
+height:100%;
+object-fit:contain;
+max-width:85vw;
+max-height:85vh;
+display:block;
+transform:scale(.98);
+transition:transform .3s ease;
+}
+
+.lightbox.active img{
+transform:scale(1);
+}
+
+.lightbox-nav{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:50px;
+height:50px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(97,175,239,.2);
+border:1px solid rgba(97,175,239,.3);
+color:#61AFEF;
+cursor:pointer;
+font-size:1.5rem;
+transition:.2s;
+user-select:none;
+}
+
+.lightbox-nav:hover{
+background:rgba(97,175,239,.35);
+border-color:rgba(97,175,239,.5);
+}
+
+.lightbox-nav.prev{
+left:1rem;
+}
+
+.lightbox-nav.next{
+right:1rem;
+}
+
+.lightbox-close{
+position:absolute;
+top:1rem;
+right:1rem;
+width:40px;
+height:40px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(97,175,239,.2);
+border:1px solid rgba(97,175,239,.3);
+color:#61AFEF;
+cursor:pointer;
+font-size:1.3rem;
+transition:.2s;
+user-select:none;
+border-radius:4px;
+}
+
+.lightbox-close:hover{
+background:rgba(97,175,239,.35);
+border-color:rgba(97,175,239,.5);
+}
+
+.lightbox-info{
+position:absolute;
+bottom:1rem;
+left:50%;
+transform:translateX(-50%);
+background:rgba(40,44,52,.9);
+border:1px solid var(--border);
+border-radius:6px;
+padding:1rem 1.5rem;
+text-align:center;
+color:#E5E9F0;
+max-width:80vw;
+backdrop-filter:blur(10px);
+}
+
+.lightbox-info h4{
+margin:0;
+font-size:1rem;
+color:#61AFEF;
+}
+
+/* UGC SECTION */
+
+.ugc-item{
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:10px;
+overflow:hidden;
+transition:.25s;
+}
+
+.ugc-item a{
+display:flex;
+flex-direction:column;
+height:100%;
+color:var(--text);
+text-decoration:none;
+}
+
+.ugc-item:hover{
+transform:translateY(-5px);
+border-color:#61AFEF;
+background:var(--card-hover);
+}
+
+.ugc-preview{
+width:100%;
+height:250px;
+background:var(--bg);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:.9rem;
+color:#5C6370;
+overflow:hidden;
+}
+
+.ugc-preview img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:.4s ease;
+}
+
+.ugc-item:hover .ugc-preview img{
+transform:scale(1.05);
+filter:brightness(1.1);
+}
+
+.ugc-info{
+padding:1.2rem;
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.ugc-info h3{
+margin-bottom:.5rem;
+font-size:1.1rem;
+color:#E5E9F0;
+}
+
+.ugc-badge{
+background:rgba(97,175,239,.1);
+color:#61AFEF;
+font-size:.75rem;
+padding:.3rem .6rem;
+border-radius:4px;
+width:fit-content;
+margin-top:.5rem;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.hero-grid{
+grid-template-columns:1fr;
+}
+
+.about{
+grid-template-columns:1fr;
+}
+
+.hero-text h1{
+font-size:2.6rem;
+}
+
+}
+
+</style>
 </head>
+
 <body>
-  <canvas id="bg-webgl"></canvas>
-  <header>
-    <nav>
-      <div class="logo">Enigman</div>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <main>
-    <section id="hero" class="fade-in">
-      <h1>Hey, I'm Enigman</h1>
-      <p class="intro">A 16-year-old developer & Blender artist. I craft real-time graphics in Roblox, tinker with C++, Python, and Lua, and love transforming concepts into interactive experiences.</p>
-      <div class="tech-stack">
-        <span>C++</span><span>Python</span><span>Lua</span><span>Blender</span><span>WebGL</span><span>Roblox Studio</span><span>Visual Basic</span>
-      </div>
-    </section>
+<header>
 
-    <section id="about" class="fade-in">
-      <h2>About Me</h2>
-      <p>My journey into development began in <strong>2022</strong> with <strong>Blender</strong> and <strong>Roblox Studio</strong>. I've been hands-on with raw asset creation, diving deep into <strong>Blender's</strong> shaders and creating stylized scenes. Simultaneously, I started building and scripting extensively in <strong>Roblox Studio</strong>, where I've focused on advanced concepts like <strong>reverse-engineering materials</strong> and implementing <strong>custom PBR (Physically Based Rendering)</strong> solutions using <strong>Lua</strong>.</p>
-      <p>In <strong>2024</strong>, I ventured into <strong>WebGL</strong>, experimenting with <strong>GLSL</strong> (OpenGL Shading Language) to create noise-based effects and real-time visuals for the web. I also started my initial explorations into <strong>C++</strong> for more fundamental programming concepts. This year, I developed the <strong>Quantum Collision Simulator</strong>, a project showcasing my ability to apply graphics programming to educational tools, built using <strong>WebGL</strong> and <strong>Visual Basic (via Gemini-CLI)</strong>.</p>
-      <p>I'm passionate about <strong>neural-visuals, procedural shaders, and custom lighting systems</strong> that truly bring pixels to life. While my core artistic and development explorations are hands-on, I leverage AI tools to streamline and enhance my <strong>web development</strong> processes. This allows me to focus my creative energy on the unique visual and interactive aspects of my projects.</p>
-    </section>
+<nav>
 
-    <section id="projects" class="fade-in">
-      <h2>Projects</h2>
-      <div class="project-cards">
-        <div class="card">
-          <h3>Quantum Collision Simulator</h3>
-          <p>An educational project built with <strong>WebGL</strong> and <strong>Visual Basic (via Gemini-CLI)</strong>, designed to visualize basic quantum collision principles through interactive simulations. Explore the underlying mechanics of subatomic interactions.</p>
-          <a href="https://github.com/EnigmanDev/Quantum/blob/main/index.html" target="_blank">View on GitHub</a>
-        </div>
-        </div>
-    </section>
+<div class="logo">ENIGMAN</div>
 
-    <section id="contact" class="fade-in">
-      <h2>Get in Touch</h2>
-      <p>Reach out to me on Instagram <a href="https://www.instagram.com/enigman1738/" target="_blank">@enigman1738</a> or drop an email at <a href="mailto:enigmadev1738@gmail.com">enigmadev1738@gmail.com</a></p>
-    </section>
-  </main>
+<ul>
+<li><a href="#work">Work</a></li>
+<li><a href="#ugc">UGC</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
 
-  <footer>© 2025 Enigman. Crafted in code with monochrome & WebGL dust.</footer>
+</nav>
 
-  <script>
-    // Smooth Scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+</header>
 
-    // Fade-In Scroll Observer
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.15 });
+<!-- HERO -->
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+<section id="hero">
 
-    // WebGL Background
-    (function(){
-      const canvas = document.getElementById('bg-webgl');
-      const gl = canvas.getContext('webgl');
-      if (!gl) return document.body.classList.add('no-webgl');
+<div class="hero-grid">
 
-      const resize = () => {
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = innerWidth * dpr;
-        canvas.height = innerHeight * dpr;
-        gl.viewport(0, 0, canvas.width, canvas.height);
-      };
-      window.addEventListener('resize', resize);
-      resize();
+<div class="hero-text">
 
-      // Vertex shader source - remains the same as it just sets up positions
-      const vertSrc = `
-        attribute vec2 a_position;
-        void main() {
-          gl_Position = vec4(a_position, 0.0, 1.0);
-        }
-      `;
-      // Fragment shader source - ensures output is grayscale
-      const fragSrc = `
-        precision mediump float;
-        uniform float u_time;
-        uniform vec2 u_res;
+<h1>Blender shenanigans<br>by Enigman</h1>
 
-        // Rotation matrix function
-        mat2 rot(float a) {
-          float s = sin(a), c = cos(a);
-          return mat2(c, -s, s, c);
-        }
+<p class="hero-intro">
+17-year-old 3D artist making stuff in Blender because his mind has to lay down every good idea he has.
+</p>
 
-        void main() {
-          // Normalize UV coordinates to -1 to 1 range
-          vec2 uv = (gl_FragCoord.xy / u_res) * 2.0 - 1.0;
-          // Apply rotation based on time
-          uv *= rot(u_time * 0.04);
+<div class="hero-tags">
+<span>Blender</span>
+<span>Professional Doodler</span>
+<span>Rendering</span>
+</div>
 
-          // Generate grid pattern
-          float grid = abs(sin(uv.x * 36.0)) + abs(sin(uv.y * 36.0));
-          grid = smoothstep(1.75, 1.95, grid); // Sharpen the grid lines
+<a href="#work" class="cta-button">View Portfolio</a>
 
-          // Generate noise
-          float noise = fract(sin(dot(uv * 1.3 + u_time, vec2(12.9898, 78.233))) * 43758.5453);
+</div>
 
-          // Mix grid and noise for the final monochrome background effect
-          float b = mix(grid, noise, 0.12); // Blend grid and noise, 0.12 for subtle noise
-          
-          // Output grayscale color (all RGB components are 'b')
-          gl_FragColor = vec4(vec3(b), 1.0);
-        }
-      `;
+<div class="hero-art">
+<img src="Images/misslikemans.png">
+</div>
 
-      const compile = (type, src) => {
-        const s = gl.createShader(type);
-        gl.shaderSource(s, src);
-        gl.compileShader(s);
-        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-          console.error(gl.getShaderInfoLog(s));
-          return null;
-        }
-        return s;
-      };
+</div>
 
-      const vert = compile(gl.VERTEX_SHADER, vertSrc);
-      const frag = compile(gl.FRAGMENT_SHADER, fragSrc);
-      const prog = gl.createProgram();
-      gl.attachShader(prog, vert);
-      gl.attachShader(prog, frag);
-      gl.linkProgram(prog);
-      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-        console.error(gl.getProgramInfoLog(prog));
-        return;
-      }
-      gl.useProgram(prog);
+</section>
 
-      const posLoc = gl.getAttribLocation(prog, 'a_position');
-      const timeLoc = gl.getUniformLocation(prog, 'u_time');
-      const resLoc = gl.getUniformLocation(prog, 'u_res');
+<!-- WORK -->
 
-      const buf = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
-      gl.enableVertexAttribArray(posLoc);
-      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+<section id="work">
 
-      let start = null;
-      const render = (ts) => {
-        if (!start) start = ts;
-        const t = (ts - start) / 1000;
-        gl.uniform1f(timeLoc, t);
-        gl.uniform2f(resLoc, canvas.width, canvas.height);
-        gl.drawArrays(gl.TRIANGLES, 0, 3);
-        requestAnimationFrame(render);
-      };
-      requestAnimationFrame(render);
-    })();
-  </script>
+<h2>Blender Work</h2>
+
+<p style="color:var(--text-secondary);margin-bottom:2rem;font-size:1rem;">yeah i made these creatures in the one and only, 3D program</p>
+
+<div class="project-grid">
+
+<div class="project" onclick="openLightbox(0)">
+<img src="Images/misslikemans.png">
+<div class="project-info">
+<h3>The Diamond Nuke (or whatever)</h3>
+<p>He looks cool aint he.</p>
+</div>
+</div>
+
+<div class="project" onclick="openLightbox(1)">
+<img src="Images/nowwhotfisthis.png">
+<div class="project-info">
+<h3>Caine from Temu</h3>
+<p>looks pretty uncanny dont u think.</p>
+</div>
+</div>
+
+<div class="project" onclick="openLightbox(2)">
+<img src="Images/scaryman.png">
+<div class="project-info">
+<h3>...</h3>
+<p>dont look at him.. please...</p>
+</div>
+</div>
+
+<div class="project" onclick="openLightbox(3)">
+<img src="Images/wecallhimmoonman.png">
+<div class="project-info">
+<h3>Moonman</h3>
+<p>somehow the most normal person here.</p>
+</div>
+</div>
+
+</section>
+
+<!-- UGC -->
+
+<section id="ugc">
+
+<h2>Roblox Work</h2>
+
+<p style="color:var(--text-secondary);margin-bottom:2rem;font-size:1rem;">even i didnt know i made this much stuff</p>
+
+<div class="project-grid">
+
+<div class="ugc-item">
+<a href="https://www.roblox.com/catalog/99358359785066/Big-Grey-Head-Red-Face" target="_blank">
+<div class="ugc-preview"><img src="https://tr.rbxcdn.com/180DAY-f4b03d05c0e41900aaeec3cf21939113/420/420/Hat/Webp/noFilter" alt="Big Grey Head Red Face"></div>
+<div class="ugc-info">
+<div>
+<h3>Big Grey Head Red Face</h3>
+<span class="ugc-badge">Accessory</span>
+</div>
+</div>
+</a>
+</div>
+
+<div class="ugc-item">
+<a href="https://www.roblox.com/catalog/124218817401048/Robot-hands-Blue" target="_blank">
+<div class="ugc-preview"><img src="https://tr.rbxcdn.com/180DAY-9efdf2d55de52b95ed0dea60dce99092/420/420/BackAccessory/Webp/noFilter" alt="Robot Hands Blue"></div>
+<div class="ugc-info">
+<div>
+<h3>Robot Hands Blue</h3>
+<span class="ugc-badge">Accessory</span>
+</div>
+</div>
+</a>
+</div>
+
+<div class="ugc-item">
+<a href="https://www.roblox.com/catalog/75326022850707/Secret-Document-File" target="_blank">
+<div class="ugc-preview"><img src="https://tr.rbxcdn.com/180DAY-74fb4ef9e9b967bd0e956345c4a00559/420/420/BackAccessory/Webp/noFilter" alt="Secret Document File"></div>
+<div class="ugc-info">
+<div>
+<h3>Secret Document File</h3>
+<span class="ugc-badge">Accessory</span>
+</div>
+</div>
+</a>
+</div>
+
+<div class="ugc-item">
+<a href="https://www.roblox.com/catalog/134178529946055/Tiny-Secret-Document-Book-Attached-To-Leg" target="_blank">
+<div class="ugc-preview"><img src="https://tr.rbxcdn.com/180DAY-fc4790e65deb501de2c3f305f430419c/420/420/WaistAccessory/Webp/noFilter" alt="Tiny Secret Document Book Attached To Leg"></div>
+<div class="ugc-info">
+<div>
+<h3>Tiny Secret Document Book Attached To Leg</h3>
+<span class="ugc-badge">Accessory</span>
+</div>
+</div>
+</a>
+</div>
+
+<div class="ugc-item">
+<a href="https://www.roblox.com/catalog/91753375534290/Jermbo-Silliest-Cat" target="_blank">
+<div class="ugc-preview"><img src="https://tr.rbxcdn.com/180DAY-27e7c28c848dbc3ff5109903c3d47683/420/420/Hat/Webp/noFilter" alt="Jermbo Silliest Cat"></div>
+<div class="ugc-info">
+<div>
+<h3>Jermbo Silliest Cat</h3>
+<span class="ugc-badge">Accessory</span>
+</div>
+</div>
+</a>
+</div>
+
+<div class="ugc-item">
+<a href="https://www.roblox.com/catalog/102517502872652/Whats-9-10-Black" target="_blank">
+<div class="ugc-preview"><img src="https://tr.rbxcdn.com/180DAY-e28e765a7e8445f7aad8e3047676f6f5/420/420/ShoulderAccessory/Webp/noFilter" alt="What's 9+10 Black"></div>
+<div class="ugc-info">
+<div>
+<h3>What's 9+10 Black</h3>
+<span class="ugc-badge">Accessory</span>
+</div>
+</div>
+</a>
+</div>
+
+<div class="ugc-item">
+<a href="https://www.roblox.com/catalog/109725622550687/Classic-Time-Bomb-OG-Explosive-Error-Original" target="_blank">
+<div class="ugc-preview"><img src="https://tr.rbxcdn.com/180DAY-d982cb22f4f2c31c9d05bc525efffe7c/420/420/BackAccessory/Webp/noFilter" alt="Classic Time Bomb OG Explosive Error Original"></div>
+<div class="ugc-info">
+<div>
+<h3>Classic Time Bomb OG Explosive Error Original</h3>
+<span class="ugc-badge">Accessory</span>
+</div>
+</div>
+</a>
+</div>
+
+<div class="ugc-item">
+<a href="https://www.roblox.com/catalog/80852236401737/GIANT-Bfdi-Knife-BFDI-BFB-TPOT-IDFB" target="_blank">
+<div class="ugc-preview"><img src="https://tr.rbxcdn.com/180DAY-68b27ef428c53b1e8b7adbbe50bb77d2/420/420/BackAccessory/Webp/noFilter" alt="GIANT Bfdi Knife"></div>
+<div class="ugc-info">
+<div>
+<h3>GIANT Bfdi Knife</h3>
+<span class="ugc-badge">Accessory</span>
+</div>
+</div>
+</a>
+</div>
+
+<div class="ugc-item">
+<a href="https://www.roblox.com/catalog/138379411419622/Steal-a-Tree-the-purple" target="_blank">
+<div class="ugc-preview"><img src="https://tr.rbxcdn.com/180DAY-ef6b6266cb757d151704f34a363c13de/420/420/Hat/Webp/noFilter" alt="Steal-a-Tree the purple"></div>
+<div class="ugc-info">
+<div>
+<h3>Steal-a-Tree the purple</h3>
+<span class="ugc-badge">Accessory</span>
+</div>
+</div>
+</a>
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<h2>About</h2>
+
+<div class="about">
+
+<p>
+I'm a 17 year old blender artist from Earth. I got 4 years of experience in blender and 3d design basically. I know how to rig, sculpt , know basic addons etc. Just do it as a cool hobby tbh.
+</p>
+
+<p>
+Alongside blender, i also study CS at the 12th grade level. 
+Idk if i said this earlier but i do love to just put down whatever thats in my mind in the beloved 3D software we have.
+</p>
+
+</div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<h2>Get In Touch</h2>
+
+<p>Open to creative collaborations and projects.</p>
+
+<div class="contact-links">
+<a href="https://www.instagram.com/swag.elefant/" target="_blank">Instagram</a>
+<a href="https://www.roblox.com/users/2506911551/profile" target="_blank">Roblox (@smbca1234)</a>
+<a href="mailto:enigmadev1738@gmail.com">Email</a>
+</div>
+
+</section>
+
+<footer>
+
+© 2026 Website, 3D Art by Enigman. Frontend by AI (apologies, im not a developer). 
+
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<div class="lightbox-wrapper" onclick="event.stopPropagation()">
+<div class="lightbox-close" onclick="closeLightbox()">✕</div>
+<img id="lightbox-img">
+<div class="lightbox-nav prev" onclick="prevImage()">‹</div>
+<div class="lightbox-nav next" onclick="nextImage()">›</div>
+<div class="lightbox-info">
+<h4 id="lightbox-title"></h4>
+</div>
+</div>
+</div>
+
+<script>
+
+const images=[
+{src:"Images/misslikemans.png",title:"The Diamond Nuke (or whatever)"},
+{src:"Images/nowwhotfisthis.png",title:"Caine from Temu"},
+{src:"Images/scaryman.png",title:"..."},
+{src:"Images/wecallhimmoonman.png",title:"Moonman"}
+]
+
+let currentIndex=0
+
+function openLightbox(index){
+currentIndex=index
+const lb=document.getElementById("lightbox")
+const img=document.getElementById("lightbox-img")
+img.src=images[index].src
+document.getElementById("lightbox-title").textContent=images[index].title
+lb.classList.add("active")
+document.body.style.overflow="hidden"
+}
+
+function closeLightbox(){
+document.getElementById("lightbox").classList.remove("active")
+document.body.style.overflow="auto"
+}
+
+function nextImage(){
+currentIndex=(currentIndex+1)%images.length
+const img=document.getElementById("lightbox-img")
+img.src=images[currentIndex].src
+document.getElementById("lightbox-title").textContent=images[currentIndex].title
+}
+
+function prevImage(){
+currentIndex=(currentIndex-1+images.length)%images.length
+const img=document.getElementById("lightbox-img")
+img.src=images[currentIndex].src
+document.getElementById("lightbox-title").textContent=images[currentIndex].title
+}
+
+document.addEventListener("keydown",(e)=>{
+if(!document.getElementById("lightbox").classList.contains("active"))return
+if(e.key==="ArrowRight")nextImage()
+if(e.key==="ArrowLeft")prevImage()
+if(e.key==="Escape")closeLightbox()
+})
+
+</script>
+
 </body>
 </html>
